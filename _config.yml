@@ -1,0 +1,101 @@
+---
+title: Cipta Media
+timezone: Asia/Jakarta
+collections:
+  posts:
+    title: Posts
+    output: true
+  uploads:
+    title: Uploads
+    output: false
+  juri-cme:
+    title: Juri
+    output: true
+  hibahcme:
+    title: Hibah CME
+    output: true
+  hibahcms:
+    title: Hibah CMS
+    output: true
+  hibahcmb:
+    title: Hibah CMB
+    output: true
+  panitia:
+    title: Panitia
+    output: true
+  laporan-keuangan-cms:
+    title: Laporan Keuangan CMS
+    output: true
+description: Halaman pembuka Cipta Media Ekspresi, Perayaan pengetahuan dan kreatifitas ekspresi perempuan dalam aneka ragam bentuk dan dinamikanya dengan rupa hibah dana tunai.
+keywords: Seni, Budaya, Perempuan, Karya, Hibah, Ford Foundation
+disqus:
+  name: ciptamedia-org
+  noscript: Harap aktifkan Javascript untuk melihat dan memberi komentar
+encoding: utf-8
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+baseurl: ""
+defaults:
+  -
+    values:
+      layout: "post"
+  - scope:
+      path: ''
+      type: juri-cme
+    values:
+      layout: people
+  - scope:
+      path: ''
+      type: panitia
+    values:
+      layout: panitia
+  - scope:
+      path: ''
+      type: hibahcme
+    values:
+      layout: hibahcme
+      permalink: hibahcme/:title
+  - scope:
+      type: hibahcms
+    values:
+      layout: hibahcms
+      permalink: hibahcms/:title
+  - scope:
+      type: hibahcmb
+    values:
+      layout: hibahcmb
+      permalink: hibahcmb/:title
+
+socials:
+  instagram: https://www.instagram.com/cipta.media.ekspresi/
+  facebook: https://www.facebook.com/ciptamedia
+  twitter: https://twitter.com/ciptamedia
+  youtube: https://www.youtube.com/channel/UCtShaHHIZrZ1iHa5bkH-Z_A
+
+jekyll_pages_api_search:
+  placeholder: Cari judul laporan, judul & kategori artikel, serta nama penulis...
+  index_fields:
+    title:
+      boost: 10
+    tags:
+      boost: 10
+    url:
+      boost: 5
+
+include:
+  - _redirects
+exclude:
+  - README.md
+  - LICENSE
+  - static/img/members/README.md
+  - vendor
+  - node_modules
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-include-cache
+  - jekyll_pages_api
+  - jekyll_pages_api_search

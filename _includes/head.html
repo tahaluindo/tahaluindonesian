@@ -1,0 +1,59 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="{{ site.description }}" name="description">
+  <meta name="keywords" content="{{ site.keywords }}">
+  <meta name="author" content="{{ site.author.name }}">
+  {% if page.seni %}
+  <title>{{ site.title }} Ekspresi | {{ page.title }} - {{ page.proyek }}</title>
+  {% else %}
+  <title>{{ site.title }} | {{ page.title }}</title>
+  {% endif %}
+  <!-- Open Graph -->
+  <meta property="og:url" content="http://www.ciptamedia.org/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ site.title }}">
+  <meta property="og:description" content="Program Hibah Tunai Untuk Kreativitas Perempuan.">
+  <meta property="og:image" content="http://www.ciptamedia.org/static/img/landing/bg_3.jpg">
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ site.title }}">
+  <meta name="twitter:description" content="Program Hibah Tunai Untuk Kreativitas Perempuan.">
+  <meta name="twitter:url" content="http://www.ciptamedia.org/">
+  <meta name="twitter:site" content="@ciptamedia">
+  <meta name="twitter:image" content="http://www.ciptamedia.org/static/img/landing/bg_3.jpg">
+  <!-- Schema.org -->
+  <meta itemprop="name" content="{{ site.title }}">
+  <meta itemprop="description" content="Program Hibah Tunai Untuk Kreativitas Perempuan.">
+  <meta itemprop="image" content="http://www.ciptamedia.org/static/img/landing/bg_3.jpg">
+  <!-- favicon -->
+  <link rel="shortcut icon" href= "/static/img/favicon.ico" >
+  {% feed_meta %}
+
+  <!-- Scripts -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
+  <script src="/static/js/netlify-identity-widget.js"></script>
+  <script src="/static/js/netlify-env.js"></script>
+  <!-- Repo for this widget: https://github.com/riouwa/netlify-identity-widget/tree/riou-diff -->
+  <!-- Font & Icon -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" href="/static/fonts/font-awesome/css/font-awesome.min.css">
+  <!-- CSS -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  {% if page.title != 'Beranda' %}
+  <link href="/static/css/material-kit.css" rel="stylesheet">
+  {% endif %}
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/netlify-identity.css" rel="stylesheet">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+  <![endif]-->
+</head>

@@ -1,0 +1,9 @@
+---
+title: Rincian Penggunaan Dana
+layout: info
+---
+
+{% assign dataset = site.laporan-keuangan-cms | where: "proyek", "rapotivi" %}
+{% assign structure = site.data.rapotivi %}
+
+{% include finance-report.html %}

@@ -1,0 +1,54 @@
+---
+title: Panitia Cipta Media Ekspresi
+layout: info
+---
+
+	<div class="container" style="margin-top: 30px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <img class="img-responsive center-block" src="/static/img/panitiacme/Group_2.jpg" style="max-height: 50vh">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="index-title">{{ page.title }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>
+                    Panitia Cipta Media Ekspresi bertanggung jawab untuk seluruh formulir yang masuk,
+                    baik formulir daring ataupun formulir cetak sebelum diteruskan pada Dewan Juri untuk dinilai.
+                    Keputusan panitia tidak dapat diganggu gugat.
+                </h2>
+                <h2>
+                    Panitia juga berkoordinasi dengan kantong-kantong komunitas seni di seluruh Indonesia
+                    untuk menyebarluaskan formulir cetak, mengkoordinasi acara sosialisasi hibah, dan menjawab seluruh pertanyaan
+                    yang masuk mengenai hibah via sosial media, surel, dan WhatsApp.
+                    <br> Panitia dapat dihubungi via info@ciptamedia.org, SMS/WhatsApp +62 821-1172-4732
+                </h2>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 70px">
+            {% for panitia in site.panitia %}
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="{{ panitia.url }}">
+                            <div class="card" style="box-shadow: 0 0 0px 0 rgba(0, 0, 0, 0), 0 0 0px 0 rgba(0, 0, 0, 0), 0 0 0px 0 rgba(0, 0, 0, 0);">
+                                <div class="card-image">
+                                    <img class="img-responsive center-block" src="{{ panitia.foto }}">
+                                </div>
+                                <div class="card-body text-center">
+                                    <h3 class="text-center" style="color: #e2bc67; font-family: 'Biryani', sans-serif; text-transform: uppercase;">{{ panitia.name }}</h3>
+                                    <h4 class="text-center" style="color: #6ca59a; font-family: 'Biryani', sans-serif;">{{ panitia.posisi }}</h4>
+                                    <p>{{ panitia.content | truncatewords: 10 }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>

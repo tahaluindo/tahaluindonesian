@@ -1,0 +1,136 @@
+---
+title: Beranda
+permalink: "/"
+author: Cipta Media
+layout: base
+---
+<link href="/static/css/index-nav.css" rel="stylesheet">
+
+<script>
+function checkAuth(user) {
+  if (!user) {
+    netlifyIdentity.on("login", function() {
+      document.location.href = "/formcme.html";
+    });
+  }
+
+  if (user && (user.user_metadata.registered || user.user_metadata.cme_form_submitted)) {
+    $("#registercme").addClass("disabled");
+    $("#registercme").text('Sudah Terdaftar!');
+  }
+}
+
+$(document).ready(function(){
+  $("a").on('click', function(event) {
+    if (this.hash !== "") {
+      event.preventDefault();
+      var hash = this.hash;
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function(){
+        window.location.hash = hash;
+      });
+    }
+  });
+
+  var user = netlifyIdentity.currentUser();
+
+  $("#registercme").click(function(event){
+    if (!user) {
+      netlifyIdentity.open();
+      return false;
+    }
+  });
+
+  checkAuth(netlifyIdentity.currentUser());
+});
+
+netlifyIdentity.on("init", checkAuth);
+</script>
+
+
+<header id="home">
+  <div class="bg-img">
+    <div class="overlay"></div>
+  </div>
+
+  <nav id="nav" class="navbar nav-transparent">
+    <div class="container">
+
+      <div class="navbar-header">
+        <!-- Logo -->
+        <div class="navbar-brand">
+          <a href="/">
+            <img class="logo" src="/static/img/landing/logo-ekspresi-typo.png" alt="logo">
+            <img class="logo-alt" src="/static/img/landing/logo-ekspresi-typo-w.png" alt="logo">
+          </a>
+        </div>
+
+        <!-- Collapse nav button -->
+        <div class="nav-collapse">
+          <span></span>
+        </div>
+      </div>
+
+      <!--  Main navigation  -->
+      <ul class="main-nav nav navbar-nav navbar-right">
+        <li><a href="/ciptamediaekspresi/kategori-ekspresi">Kategori</a></li>
+        <li><a href="/ciptamediaekspresi/timeline-ekspresi">Linimasa</a></li>
+        <li><a href="/ciptamediaekspresi/juri-ekspresi">Dewan Juri & Panitia</a></li>
+        <li><a href="/ciptamediaekspresi/syarat-ekspresi">Syarat & Ketentuan</a></li>
+        <li><a href="/ciptamediaekspresi/faq-ekspresi">Pertanyaan Umum</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /Nav -->
+
+  <!-- home wrapper -->
+  <div class="home-wrapper">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-10 col-md-offset-1">
+          <div class="home-content">
+            <h1 class="white-text">Cipta Media Ekspresi</h1>
+            <p class="white-text">Hibah dana tunai untuk merayakan keragaman pengetahuan dan ekspresi kreativitas perempuan di Indonesia.</p>
+
+            <h2 class="white-text">
+              <div id="countdown"></div>
+            </h2>
+
+            <a class="btn white-btn" href="/ciptamediaekspresi/pemohon-ekspresi.html">
+              Permohonan Hibah
+            </a>
+            <a id="registercme" class="btn main-btn" href="formcme.html">
+              Formulir
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="index-margin">
+    <div class="container">
+        <div class="row">
+            <div class="section-header text-center">
+                <h2 class="title">Cipta Media Ekspresi</h2>
+            </div>
+            <div class="col-md-4">
+                <img class="img-responsive center-block" src="/static/img/landing/CME_Aset_Leaf_Blue.png">
+            </div><!--
+            --><div class="col-md-6">
+                <p style="font-size: 1.2em; line-height: 1.5">Cipta Media Ekspresi merupakan hibah untuk perempuan pelaku kebudayaan di segala bidang seni. Hibah dapat digunakan untuk membuat, mengkaji, melakukan perjalanan serta membantu perempuan mencipta atau menampilkan karya.</p>
+                <p style="font-size: 1.2em; line-height: 1.5">Karya dapat berupa ciptaan asli, kajian, pemilihan benda-benda untuk dipamerkan atau diarsipkan dengan maksud mempertunjukkan atau berbagi.</p>
+                <p style="font-size: 1.2em; line-height: 1.5">Jumlah total dana hibah Cipta Media Ekspresi adalah 3,5 milyar rupiah bagi proyek yang dapat diselesaikan sebelum 28 Februari 2019.</p>
+                <a class="index-link" href="/ciptamediaekspresi/tentang-ekspresi" style="font-size: 1.2em; line-height: 1.5">Selengkapnya</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include stats.html %}
+
+<script type="text/javascript" src="/static/js/mainpage.js"></script>
+<script type="text/javascript" src="/static/js/countdown.js"></script>

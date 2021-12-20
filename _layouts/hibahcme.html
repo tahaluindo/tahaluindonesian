@@ -1,0 +1,208 @@
+---
+title: Pemohon Hibah
+layout: info
+---
+{% assign foto_url_first_char = page.foto.url | slice: 0 %}
+{% if foto_url_first_char == '/' %}
+  {% assign foto_url = page.foto.url | absolute_url %}
+{% else %}
+  {% assign foto_url = page.foto.url %}
+{% endif %}
+
+{% if page.foto_rotate %}
+  {% assign foto_src = foto_url
+                     | replace_first: ".com", ".com.rsz.io"
+                     | append: "?width=300"
+                     | append: "&amp;rotate="
+                     | append: page.foto_rotate
+                     %}
+{% else %}
+  {% assign foto_src = "https://zimage.global.ssl.fastly.net/?url="
+                     | append: foto_url
+                     | append: "&amp;width=300"
+                     %}
+{% endif %}
+
+    <section id="header" style="background-image: url(/static/img/landing/faq-header.png);background-size: cover;background-attachment: scroll;background-repeat: no-repeat;background-position: bottom;height: 40vh;width: 100%"></section>
+    {% if jekyll.environment != 'production' %}
+        <style>
+            .grey-overlay {
+                width: 100%;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0,0,0,0.1);
+                z-index: 2;
+            }
+            .hide-screened {
+                display: none;
+            }
+        </style>
+        <div class="container grey-overlay">
+            <div class="row">
+                <div class="col-lg-12 text-center" style="margin-top: 30px">
+                    <h1 class="index-title">Permohonan Tertunda</h1>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="container grey-overlay">
+        <div class="row hide-screened">
+            <div class="col-lg-12 text-center" style="margin-top: 30px">
+                <h1 class="index-title">Pemohon Hibah {{ page.no_proyek }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <h2 class="text-center" style="color: #e2bc67; text-transform: uppercase; font-weight: bold; margin-top: 50px">Proyek</h2>
+                <hr style="border-top: 1px solid #ffca5f;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">No. Formulir</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.nomor }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Judul Proyek</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.proyek | xml_escape }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Lokasi Proyek</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.lokasi | xml_escape }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Deskripsi Proyek</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.deskripsi | xml_escape }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Kategori</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.kategori }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Latar Belakang Proyek</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.latar_belakang | xml_escape }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Masalah yang Diangkat</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.masalah | xml_escape }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Durasi Proyek</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.durasi | xml_escape }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Indikator Sukses</p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ page.sukses | xml_escape }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-2">
+                <p style="font-weight: bold; color: #17374e;">Dana Hibah</p>
+            </div>
+            <div class="col-md-6">
+                <p>Rp.{{ page.dana }} Juta</p>
+            </div>
+        </div>
+        <img class="img-responsive center-block" src="/static/img/landing/kategori.png" style="max-height: 300px; margin-top: 90px">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <h2 class="text-center" style="color: #e2bc67; text-transform: uppercase; font-weight: bold; margin-top: 50px">{{ page.nama | xml_escape }}</h2>
+                <hr style="border-top: 1px solid #ffca5f;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-2">
+                <img
+                  class="rsz-fallback pemohon-img img-responsive center-block"
+                  src="{{ foto_src }}"
+                  style="max-height: 400px"
+                >
+            </div>
+            <div class="col-md-4">
+                <h3 style="color: #e2bc67; text-transform: uppercase; font-weight: bold">Riwayat Berkarya</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p style="font-weight: bold; color: #17374e;">Bidang Seni yang Ditekuni</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p>{{ page.seni }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p style="font-weight: bold; color: #17374e;">Pengalaman Berkarya</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p>{{ page.pengalaman | xml_escape }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p style="font-weight: bold; color: #17374e;">Contoh Karya</p>
+                    </div>
+                    <div class="col-md-8">
+                        <a href="{{ page.file.url }}">{{ page.file.filename }}</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p style="font-weight: bold; color: #17374e;">Situs Web</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p>{{ page.website | xml_escape }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p style="font-weight: bold; color: #17374e;">Media Sosial</p>
+                    </div>
+                    <div class="col-md-8">
+                        <p>{{ page.sosmed | xml_escape }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                {% disqus %}
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/rsz-fallback.js"></script>

@@ -1,0 +1,9 @@
+---
+title: Rincian Penggunaan Dana
+layout: info
+---
+
+{% assign dataset = site.laporan-keuangan-cms | where: "proyek", "kerjabilitas" %}
+{% assign structure = site.data.kerjabilitas %}
+
+{% include finance-report.html %}

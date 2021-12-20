@@ -1,0 +1,59 @@
+# Template project: https://gitlab.com/pages/jekyll
+# Docs: https://docs.gitlab.com/ce/pages/
+image: ruby:2.4.3
+
+variables:
+  GIT_DEPTH: 1
+  GIT_STRATEGY: fetch
+  JEKYLL_ENV: production
+  BUNDLE_PATH: vendor/bundle
+  NOKOGIRI_USE_SYSTEM_LIBRARIES: 1
+  LC_ALL: C.UTF-8
+
+.before_script_bundle: &before_script_bundle
+  - bundle install --deployment
+  - 'echo "url: https://"${CI_PROJECT_NAME} >> _config.${JEKYLL_ENV}.yml'
+
+test:
+  stage: test
+  variables:
+    JEKYLL_ENV: test
+  before_script: *before_script_bundle
+  script:
+    - .ci/fast_build.sh
+    - bundle exec htmlproofer ./public --empty-alt-ignore --assume-extension --disable-external --checks-to-ignore=LinkCheck,ImageCheck --check-html
+  cache:
+    paths:
+      - vendor
+      - public
+  except:
+    - master
+
+check_code:
+  stage: test
+  variables:
+    GIT_STRATEGY: clone
+  image: python:slim
+  script:
+    - pip install coala-bears
+    - coala --ci
+  except:
+    - master
+
+pages:
+  stage: deploy
+  variables:
+    # Simulate the netlify production flag used by .ci/fast_build.sh
+    CONTEXT: production
+  before_script: *before_script_bundle
+  script:
+    - .ci/fast_build.sh
+  cache:
+    paths:
+      - vendor
+      - public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

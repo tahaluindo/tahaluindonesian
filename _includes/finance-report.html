@@ -1,0 +1,244 @@
+<style>
+  .fa-check {
+    color: #2DC464;
+  }
+  .fa-times {
+    color: #F85154
+  }
+  .tab-content > .active {
+    display: table-row;
+  }
+  .table > tbody > tr.active > td {
+    background-color: white;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <button type="button" id="clear" class="btn btn-danger btn-xs">Clear</button>
+      <a href=".semua" class="btn btn-danger btn-xs" data-toggle="pill"><strong>Semua</strong></a>
+    </div>
+    <div class="col-lg-12 text-center">
+      {% assign b = 0 %}
+      {% for item in structure.laporan %}
+      {% assign detail = item[1] %}
+      {% for subkode in detail.subkode %}
+      {% assign a = subkode[0] %}
+      {% if b != a %}
+      <a href=".{{ subkode[0] }}" class="btn btn-danger btn-xs" data-toggle="pill"><strong>{{ subkode[0] }}</strong></a>
+      {% endif %}
+      {% assign b = a %}
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Rincian Penggunaan Dana</h2>
+      <table class="table">
+        <thead class="text-danger">
+          <th width="10%" class="text-left">Tanggal</th>
+          <th width="40%" class="text-left">Rincian</th>
+          <th width="10%" class="text-center">Status Penggantian</th>
+          <th width="20%" class="text-right">Kredit</th>
+          <th width="20%" class="text-right">Debit</th>
+        </thead>
+        <tbody class="tab-content">
+          <tr>
+            <td width="10%"></td>
+            <td width="40%"><strong><p class="text-left">Total Anggaran</p></strong></td>
+            <td width="10%"></td>
+            <td width="20%"><strong><p class="text-right">{{ structure.total_rencana_anggaran }}</p></strong></td>
+            <td width="20%"></td>
+          </tr>
+          {% for item in dataset reversed %}
+          <tr class="{{ item.kode }} semua tab-pane fade">
+            <td width="10%"><strong><p class="text-left">{{ item.date | date: "%D" }}</p></strong></td>
+            <td width="40%">
+              <strong><p class="text-left">{{ item.nama }}</p></strong>
+              <p class="text-left">{{ item.title }}</p>
+            </td>
+            <td width="10%">
+              <strong><p class="text-center">
+                <a href="#" data-toggle="modal" data-target="#transaction-detail" 
+                   data-nama="{{ item.nama }}"
+                   data-kode="{{ item.kode }}"
+                   data-title="{{ item.title | xml_escape }}"
+                   data-biaya="{{ item.biaya }}"
+                   data-date="{{ item.date | date: "%D" }}"
+                   data-anggaran="{{ item.anggaran | xml_escape }}"
+                   data-nota="{% if item.nota.url %}{{ item.nota.url }}{% else %}{{ item.nota }}{% endif %}"
+                   data-tanggalpelunasan="{{ item.tanggalpelunasan | date: "%D" }}"
+                   data-notapelunasan="{% if item.notapelunasan.url %}{{ item.notapelunasan.url }}{% else %}{{ item.notapelunasan }}{% endif %}">
+                  {% if item.tanggalpelunasan %}
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                  {% else %}
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                  {% endif %}
+                </a>
+              </p></strong>
+            </td>
+            <td width="20%"></td>
+            <td width="20%"><strong><p class="text-right">{{ item.biaya }}</p></strong></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td width="5%"></td>
+            <td width="50%"><strong><p class="text-left">Total Pengeluaran</p></strong></td>
+            <td width="5%"></td>
+            <td width="20%"></td>
+            {% assign total_cost = 0 %}
+            {% for item in dataset %}
+              {% assign total_cost = total_cost | plus: item.biaya %}
+            {% endfor %}
+            <td width="20%"><strong><p class="text-right">{{ total_cost }}</p></strong></td>
+          </tr>
+          <tr>
+            <td width="5%"></td>
+            <td width="50%"><strong><p class="text-left">Sisa Saldo</p></strong></td>
+            <td width="5%"></td>
+            {% assign sisa = structure.total_rencana_anggaran | minus: total_cost %}
+            {% if sisa < 0 %}
+            <td width="20%"><strong><p class="text-right" style="color:#F85154">{{ sisa }}</p></strong></td>
+            {% else %}
+            <td width="20%"><strong><p class="text-right" style="color:#2DC464">{{ sisa }}</p></strong></td>
+            {% endif %}
+            <td width="20%"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="transaction-detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Status Pelunasan</h3>
+        <h4 class="modal-subtitle"></h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th class="text-center">Nama</th>
+                  <th class="text-center">Transaksi</th>
+                  <th class="text-center">Kode Anggaran</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><p class="modal-nama"></p></td>
+                  <td><p class="modal-judul"></p></td>
+                  <td><p class="modal-kode"></p></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table text-center">
+              <thead>
+                <tr>
+                  <th class="text-center">Tanggal Transaksi</th>
+                  <th class="text-center">Tanggal Pelunasan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><p class="modal-date"></p></td>
+                  <td><p class="modal-tanggalpelunasan"></p></td>
+                </tr>
+                <tr>
+                  <td>
+                    <a class="modal-nota">
+                      <img class="modal-nota img-responsive center-block">
+                      <p class="nota-placeholder"></p>
+                    </a>
+                  </td>
+                  <td>
+                    <a class="modal-notapelunasan">
+                      <img class="modal-notapelunasan img-responsive center-block">
+                      <p class="notapelunasan-placeholder"></p>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <strong>BIAYA</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <p class="modal-biaya"></p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$("#clear").click(function(){
+  $(".active").removeClass("active");
+});
+  
+$('#transaction-detail').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget)
+  const wikiFile = "/File:"
+  var nama = button.data("nama")
+  var kode = button.data("kode")
+  var title = button.data("title")
+  var biaya = button.data("biaya")
+  var date = button.data("date")
+  var anggaran = button.data("anggaran")
+  var nota = button.data("nota")
+  var tanggalpelunasan = button.data("tanggalpelunasan")
+  var notapelunasan = button.data("notapelunasan")
+  var modal = $(this)
+  modal.find('.modal-subtitle').text( kode + " - " + title )
+  modal.find('.modal-kode').text(kode)
+  modal.find('.modal-nama').text(nama)
+  modal.find('.modal-judul').text(title)
+  modal.find('.modal-biaya').text(biaya)
+  modal.find('.modal-date').text(date)
+  modal.find('.modal-tanggalpelunasan').text(tanggalpelunasan)
+  
+  if ( nota == "" ){
+    modal.find('img.modal-nota').removeAttr("src")
+    modal.find('a.modal-nota').removeAttr("href")
+    modal.find('p.nota-placeholder').text("-")
+  } else if ( nota.indexOf(wikiFile) > -1 ) {
+    modal.find('img.modal-nota').removeAttr("src")
+    modal.find('a.modal-nota').attr("href",nota)
+    modal.find('p.nota-placeholder').text("NOTA")
+  } else {
+    modal.find('img.modal-nota').attr("src",nota)
+    modal.find('a.modal-nota').attr("href",nota)
+    modal.find('p.nota-placeholder').empty()
+  }
+  
+  if ( notapelunasan == "" ){
+    modal.find('img.modal-notapelunasan').removeAttr("src")
+    modal.find('a.modal-notapelunasan').removeAttr("href")
+    modal.find('p.notapelunasan-placeholder').text("-")
+  } else if ( notapelunasan.indexOf(wikiFile) > -1 ) {
+    modal.find('img.modal-notapelunasan').removeAttr("src")
+    modal.find('a.modal-notapelunasan').attr("href",notapelunasan)
+    modal.find('p.notapelunasan-placeholder').text("NOTA PELUNASAN")
+  } else {
+    modal.find('img.modal-notapelunasan').attr("src",notapelunasan)
+    modal.find('a.modal-notapelunasan').attr("href",notapelunasan)
+    modal.find('p.notapelunasan-placeholder').empty()
+  }
+})
+</script>
